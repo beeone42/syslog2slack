@@ -1,0 +1,9 @@
+{
+	"fname":"/var/log/syslog",
+	"slack-token":"xoxb-12345....ABCDEF",
+	"slack-channel":"syslog",
+	"tokens":[
+		"(mail roundcube:) <.*> (Successful login for [^ ]+@[^ ]+) \\(.*\\) (from [0-9\\.]+) in session ",
+		"(mail roundcube:) <.*> (Failed login for [^ ]+@[^ ]+ from [0-9\\.]+) in session "
+		]
+}
