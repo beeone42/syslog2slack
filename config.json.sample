@@ -1,9 +1,19 @@
 {
-	"fname":"/var/log/syslog",
+	"fname":[
+		"/var/log/syslog",
+		"/var/log/fail2ban.log",
+		"/var/log/auth.log"
+		],
+	"nb-lines-back":100,
+	"sleep-time":5,
+	"prefix":"mail",
 	"slack-token":"xoxb-12345....ABCDEF",
-	"slack-channel":"syslog",
+	"slack-channel":"beemon",
 	"tokens":[
-		"(mail roundcube:) <.*> (Successful login for [^ ]+@[^ ]+) \\(.*\\) (from [0-9\\.]+) in session ",
-		"(mail roundcube:) <.*> (Failed login for [^ ]+@[^ ]+ from [0-9\\.]+) in session "
+		" (roundcube:) <.*> (Successful login for [^ ]+@[^ ]+) \\(.*\\) (from [0-9\\.]+) in session ",
+		" (roundcube:) <.*> (Failed login for [^ ]+@[^ ]+ from [0-9\\.]+) in session ",
+		" (fail2ban.actions: WARNING) \\[postfix-iredmail\\] (Ban [0-9\\.]+)$",
+		" (fail2ban.actions: WARNING) \\[postfix-iredmail\\] (Unban [0-9\\.]+)$",
+		" su\\[[0-9]+\\]: (Successful su for [^ ]+ by [^ ]+)$"
 		]
 }
