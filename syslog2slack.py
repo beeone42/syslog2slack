@@ -12,6 +12,7 @@ import urllib
 CONFIG_FILE = 'config.json'
 BUF = 1024
 SEEN = []
+DEBUG = 1
 
 def open_and_load_config():
     if os.path.exists(CONFIG_FILE):
@@ -60,6 +61,7 @@ def post2slack(config, txt):
 
 if __name__ == "__main__":
     config = open_and_load_config()
+    SEEN_max_size = len(config['fname']) * config['nb-lines-back']
     while True:
         for f in config['fname']:
             for l in tail(f, config['nb-lines-back']):
@@ -69,7 +71,13 @@ if __name__ == "__main__":
                         if l not in SEEN:
                             SEEN.append(l)
                             txt = config['prefix'] + ': ' + ' '.join(m.groups())
-                            print txt
+                            if (DEBUG == 1):
+                                print txt
                             post2slack(config, txt)
+        if (len(SEEN) > SEEN_max_size):
+            if (DEBUG == 1):
+                print "*** purge SEEN buffer"
+            while len(SEEN) > SEEN_max_size:
+                SEEN.pop(0)
         time.sleep(config['sleep-time'])
                 
