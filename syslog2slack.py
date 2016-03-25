@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import os
-import time
+import time, datetime
 import errno
 import stat
 import sys
@@ -50,11 +50,15 @@ def tail(fname, n):
                 return data.splitlines()[-n:]
     return data.splitlines()
 
+def date(format = '%Y-%m-%d %H:%M:%S'):
+    d = datetime.datetime.now()
+    return d.strftime(format)
+
 def post2slack(config, txt):
     f = { 'token': config['slack-token'],
           'channel': config['slack-channel'],
           'as_user': 'true',
-          'text': txt }
+          'text': date() + ' :: ' + txt }
     url = 'https://slack.com/api/chat.postMessage?' + urllib.urlencode(f)
     urllib.urlopen(url)
 
